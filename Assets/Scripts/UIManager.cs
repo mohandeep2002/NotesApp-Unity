@@ -15,16 +15,26 @@ public class UIManager : MonoBehaviour
     {
         if (infoPanel.gameObject.activeInHierarchy)
         {
-            placeHolderHomePage.gameObject.SetActive(true);
-            infoPanel.gameObject.SetActive(false);
-            print("infopanel Active");
+            ToggleInfoPanel(false);
+            TogglePlaceHolders(true);
         }
         else
         {
-            print("infopanel Deactive");
-            placeHolderHomePage.gameObject.SetActive(false);
-            infoPanel.gameObject.SetActive(true);
+            ToggleInfoPanel(true);
+            TogglePlaceHolders(false);
         }
+    }
+    #endregion
+
+    #region UIEvents
+    public void ToggleInfoPanel(bool state)
+    {
+        infoPanel.gameObject.SetActive(state);
+    }
+
+    public void TogglePlaceHolders(bool state)
+    {
+        placeHolderHomePage.gameObject.SetActive(state);
     }
     #endregion
 }
