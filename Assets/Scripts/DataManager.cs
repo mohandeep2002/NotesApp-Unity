@@ -18,6 +18,7 @@ public class DataManager : MonoBehaviour
     public List<GameObject> dataGenerated = new List<GameObject>();
 
 
+    #region CRUD Operations
     public void AddNewNode(string title, string description)
     {
         NotesNode node = new NotesNode();
@@ -38,6 +39,8 @@ public class DataManager : MonoBehaviour
         return dataFromForm;
     }
 
+    #endregion
+
     private int GenerateUniqueNumber()
     {
         int maxAttempts = 1000;
@@ -55,6 +58,20 @@ public class DataManager : MonoBehaviour
         return -1;
     }
 
+    private void AssignColor(Image panelImage)
+    {
+        if (colorCount == colors.Count)
+        {
+            colorCount = 0;
+            panelImage.color = colors[colorCount];
+        }
+        else
+        {
+            panelImage.color = colors[colorCount];
+        }
+        colorCount++;
+    }
+
     private void CreateNewNodeUI(NotesNode newNode)
     {
         GameObject newUIPanel = Instantiate(node, content);
@@ -66,19 +83,5 @@ public class DataManager : MonoBehaviour
         newUIPanel.GetComponentInChildren<TextMeshProUGUI>().text = nodeData.nodeTitle;
         dataGenerated.Add(newUIPanel);
         AssignColor(newUIPanel.GetComponent<Image>());
-    }
-
-    private void AssignColor(Image panelImage)
-    {
-        if (colorCount == 7)
-        {
-            colorCount = 0;
-            panelImage.color = colors[colorCount];
-        }
-        else
-        {
-            panelImage.color = colors[colorCount];
-        }
-        colorCount++;
     }
 }

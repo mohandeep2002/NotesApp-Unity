@@ -51,6 +51,7 @@ public class UIManager : MonoBehaviour
                 }
             }
         }
+        if (dataManager.GetAllNodes().Count > 0) TogglePlaceHolders(false);
     }
 
     #endregion
@@ -63,7 +64,7 @@ public class UIManager : MonoBehaviour
         if (infoPanel.activeInHierarchy)
         {
             ToggleInfoPanel(false);
-            TogglePlaceHolders(true);
+            if (dataManager.GetAllNodes().Count == 0) TogglePlaceHolders(true);
         }
         else
         {
