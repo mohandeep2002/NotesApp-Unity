@@ -39,6 +39,22 @@ public class DataManager : MonoBehaviour
         return dataFromForm;
     }
 
+    public void DeleteNode(int id)
+    {
+        Debug.Log("Came to deletenode function");
+        for (int i = 0; i < dataFromForm.Count; i++)
+        {
+            Debug.Log(id + " " + dataFromForm[i].NoteID);
+            if (id == dataFromForm[i].NoteID)
+            {
+                dataFromForm.RemoveAt(i);
+                DeleteUI(id);
+                Debug.Log("Datafromform delted");
+                return;
+            }
+        }
+    }
+
     #endregion
 
     private int GenerateUniqueNumber()
@@ -79,9 +95,21 @@ public class DataManager : MonoBehaviour
         nodeData.indexOfNode = newNode.NoteID;
         nodeData.nodeTitle = newNode.Title;
         nodeData.nodeDesp = newNode.Description;
-        newUIPanel.name = nodeData.nodeTitle;
+        newUIPanel.name = nodeData.indexOfNode.ToString();
         newUIPanel.GetComponentInChildren<TextMeshProUGUI>().text = nodeData.nodeTitle;
         dataGenerated.Add(newUIPanel);
         AssignColor(newUIPanel.GetComponent<Image>());
+    }
+
+    private void DeleteUI(int id)
+    {
+        for (int i = 0; i < dataGenerated.Count; i++)
+        {
+            if (id == dataGenerated[i].GetComponent<NodeData>().indexOfNode)
+            {
+                dataGenerated.RemoveAt(i);
+                return;
+            }
+        }
     }
 }

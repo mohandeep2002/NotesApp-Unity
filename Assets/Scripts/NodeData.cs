@@ -1,42 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class NodeData : MonoBehaviour
+public class NodeData : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public Color nodeColor;
     public int indexOfNode;
     public string nodeTitle;
     public string nodeDesp;
 
-    private bool isHolding = false;
-    private float holdStartTime = 0f;
+    public bool isHolding = false;
+    public float holdDuration = 0f;
     public Image actualImage;
     public GameObject buttonGameObject;
+    public DataManager dataManager;
+
+    private void Start()
+    {
+        dataManager = GameObject.Find("DataManager").GetComponent<DataManager>();
+    }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (isHolding)
         {
-            isHolding = true;
-            holdStartTime = Time.time;
-        }
+            holdDuration += Time.deltaTime;
 
-        if (isHolding && Input.GetMouseButton(0))
-        {
-            float holdDuration = Time.time - holdStartTime;
             if (holdDuration >= 1f)
             {
-                Debug.Log(gameObject.name);
                 actualImage.enabled = false;
                 buttonGameObject.SetActive(true);
             }
         }
-        
-        if (Input.GetMouseButtonUp(0))
-        {
-            isHolding = false;
-        }
+    }
+
+    public void OnPointerDown(PointerEventData pointerEventData)
+    {
+        isHolding = true;
+    }
+
+    public void OnPointerUp(PointerEventData pointerEventData)
+    {
+        isHolding = false;
+        holdDuration = 0f;
+    }
+
+    public void DeleteButtonClicked()
+    {
+        Debug.Log("DeleteButtonCLicked called");
+        dataManager.DeleteNode(indexOfNode);
     }
 }
