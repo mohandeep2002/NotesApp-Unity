@@ -23,11 +23,13 @@ public class DataManager : MonoBehaviour
     {
         NotesNode node = new NotesNode();
         int number = GenerateUniqueNumber();
+        Debug.Log("Generated number is " + number);
         while (number == -1)
         {
             number = GenerateUniqueNumber();
         }
         node.NoteID = number;
+        // Debug.Log("Generated number and assigned number after logic NODE.NOTEID:" + node.NoteID + " NUMBER:" + number);
         node.Description = description;
         node.Title = title;
         dataFromForm.Add(node);
@@ -41,16 +43,14 @@ public class DataManager : MonoBehaviour
 
     public void DeleteNode(int id)
     {
-        Debug.Log("Came to deletenode function");
+        // Debug.Log("DeleteNode function called " + id);
         for (int i = 0; i < dataFromForm.Count; i++)
         {
-            Debug.Log(id + " " + dataFromForm[i].NoteID);
             if (id == dataFromForm[i].NoteID)
             {
                 dataFromForm.RemoveAt(i);
                 DeleteUI(id);
-                Debug.Log("Datafromform delted");
-                return;
+                break;
             }
         }
     }
@@ -66,7 +66,7 @@ public class DataManager : MonoBehaviour
             if (!usedNumbers.Contains(randomNumber))
             {
                 usedNumbers.Add(randomNumber);
-                Debug.Log("Came inside if " + i + " " + randomNumber);
+                // Debug.Log("Came inside if " + i + " " + randomNumber);  
                 return randomNumber;
             }
         }
@@ -91,11 +91,13 @@ public class DataManager : MonoBehaviour
     private void CreateNewNodeUI(NotesNode newNode)
     {
         GameObject newUIPanel = Instantiate(node, content);
-        NodeData nodeData = node.GetComponent<NodeData>();
+        NodeData nodeData = newUIPanel.GetComponent<NodeData>();
         nodeData.indexOfNode = newNode.NoteID;
+        // Debug.Log("===nodeData.indexOfNode:" + nodeData.indexOfNode);
         nodeData.nodeTitle = newNode.Title;
         nodeData.nodeDesp = newNode.Description;
         newUIPanel.name = nodeData.indexOfNode.ToString();
+        // Debug.Log("CreatingNewNodeUI nodeData.indexOfNode:" + nodeData.indexOfNode + " newNode.NoteID:" + newNode.NoteID + " newUIPanel.name:" + newUIPanel.name);
         newUIPanel.GetComponentInChildren<TextMeshProUGUI>().text = nodeData.nodeTitle;
         dataGenerated.Add(newUIPanel);
         AssignColor(newUIPanel.GetComponent<Image>());
@@ -107,8 +109,9 @@ public class DataManager : MonoBehaviour
         {
             if (id == dataGenerated[i].GetComponent<NodeData>().indexOfNode)
             {
+                Destroy(dataGenerated[i]);
                 dataGenerated.RemoveAt(i);
-                return;
+                break;
             }
         }
     }

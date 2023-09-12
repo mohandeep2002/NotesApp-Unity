@@ -49,7 +49,7 @@ public class NodeData : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void DeleteButtonClicked()
     {
-        Debug.Log("DeleteButtonCLicked called");
+        Debug.Log("Delete Button Clicked");
         dataManager.DeleteNode(indexOfNode);
     }
 }

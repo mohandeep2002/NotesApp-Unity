@@ -92,9 +92,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodeColor: {r: 0, g: 0, b: 0, a: 0}
-  indexOfNode: 0
-  nodeTitle: 
-  nodeDesp: 
+  indexOfNode: -111
+  nodeTitle: Null
+  nodeDesp: Null
   isHolding: 0
   holdDuration: 0
   actualImage: {fileID: 2947403788144905548}
