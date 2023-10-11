@@ -120,6 +120,12 @@ public class UIManager : MonoBehaviour
     #endregion
 
     #region EditNotesPanelClicks
+    public void EditButtonClicked()
+    {
+        editDescriptionText.interactable = true;
+        editTitleText.interactable = true;
+    }
+
     public void BackButtonClickedInEditNote()
     {
         editDescriptionText.text = "";
@@ -131,7 +137,7 @@ public class UIManager : MonoBehaviour
 
     public void SaveButtonClickedInEditNote()
     {
-
+        Debug.Log("ConfirmSave clicked");
     }
     #endregion
 

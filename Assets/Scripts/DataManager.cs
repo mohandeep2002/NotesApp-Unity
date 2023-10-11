@@ -57,7 +57,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void UpdateNote(int id)
+    public void UpdateNote(int id, string nodeTitle, string nodeDescription)
     {
 
     }
