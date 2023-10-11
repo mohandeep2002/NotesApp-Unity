@@ -14,9 +14,11 @@ public class UIManager : MonoBehaviour
     public GameObject searchPanel;
     public GameObject newNotesPanel;
     public GameObject saveConfirmationPanel;
+    public GameObject editNotePanel;
 
-    [Header("Texts")]
+    [Header("Text for searching")]
     public TMPro.TMP_InputField searchingText;
+    [Header("Text for New note panel")]
     public TMPro.TMP_InputField titleText;
     public TMPro.TMP_InputField descriptionText;
 
@@ -25,6 +27,11 @@ public class UIManager : MonoBehaviour
 
     [Header("Data Manager")]
     public DataManager dataManager;
+
+    [Header("Texts for edit note panel")]
+    public TMPro.TMP_InputField editTitleText;
+    public TMPro.TMP_InputField editDescriptionText;
+    public TMPro.TextMeshProUGUI editedIndexNumber;
 
     #endregion
 
@@ -100,6 +107,7 @@ public class UIManager : MonoBehaviour
             saveConfirmationPanel.SetActive(true);
         }
     }
+
     public void ConfirmSaveData()
     {
         dataManager.AddNewNode(titleText.text, descriptionText.text);
@@ -109,6 +117,22 @@ public class UIManager : MonoBehaviour
         BackButtonClickInNew();
     }
 
+    #endregion
+
+    #region EditNotesPanelClicks
+    public void BackButtonClickedInEditNote()
+    {
+        editDescriptionText.text = "";
+        editTitleText.text = "";
+        editedIndexNumber.text = "";
+        ToggleEditNotesPanel(false);
+        ToggleMainPanel(true);
+    }
+
+    public void SaveButtonClickedInEditNote()
+    {
+
+    }
     #endregion
 
     #endregion
@@ -137,6 +161,7 @@ public class UIManager : MonoBehaviour
     public void ToggleMainPanel(bool state)
     {
         mainPanel.SetActive(state);
+        if (state) dataManager.MakeAllIsHoldingFalse();
     }
 
     public void ToggleNewNotesPanel(bool state)
@@ -147,6 +172,20 @@ public class UIManager : MonoBehaviour
     public void ToggleConfirmSavePanel(bool state)
     {
         saveConfirmationPanel.SetActive(state);
+    }
+
+    public void ToggleEditNotesPanel(bool state)
+    {
+        editNotePanel.SetActive(state);
+    }
+
+    public void ShowDataToEdit(int id, string heading, string description)
+    {
+        ToggleEditNotesPanel(true);
+        ToggleMainPanel(false);
+        editTitleText.text = heading;
+        editDescriptionText.text = description;
+        editedIndexNumber.text = id.ToString();
     }
 
     #endregion

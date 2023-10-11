@@ -16,7 +16,9 @@ public class DataManager : MonoBehaviour
     public int colorCount = 0;
     public List<Color> colors = new List<Color>();
     public List<GameObject> dataGenerated = new List<GameObject>();
-
+    [Header("UI Manager")]
+    [SerializeField]
+    private UIManager uIManager;
 
     #region CRUD Operations
     public void AddNewNode(string title, string description)
@@ -53,6 +55,11 @@ public class DataManager : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void UpdateNote(int id)
+    {
+
     }
 
     #endregion
@@ -113,6 +120,30 @@ public class DataManager : MonoBehaviour
                 dataGenerated.RemoveAt(i);
                 break;
             }
+        }
+    }
+
+    public void ShowNoteToEdit(int id)
+    {
+        foreach (var data in dataGenerated)
+        {
+            if (data.name.Equals(id.ToString()))
+            {
+                Debug.Log("Yes this is it");
+                NodeData tempNodeData = data.GetComponent<NodeData>();
+                uIManager.ShowDataToEdit(tempNodeData.indexOfNode, tempNodeData.nodeTitle, tempNodeData.nodeDesp);
+                break;
+            }
+        }
+        // uIManager.ShowDataToEdit();
+    }
+
+    public void MakeAllIsHoldingFalse()
+    {
+        foreach (var node in dataGenerated)
+        {
+            NodeData tempNode = node.GetComponent<NodeData>();
+            tempNode.isHolding = false;
         }
     }
 }

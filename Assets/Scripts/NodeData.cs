@@ -12,6 +12,7 @@ public class NodeData : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public string nodeDesp;
 
     public bool isHolding = false;
+    public bool isTouchedOnce = false;
     public float holdDuration = 0f;
     public Image actualImage;
     public GameObject buttonGameObject;
@@ -27,9 +28,15 @@ public class NodeData : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (isHolding)
         {
             holdDuration += Time.deltaTime;
-
+            if (holdDuration < 0.3f && isTouchedOnce == false)
+            {
+                Debug.Log("Clicked Once Only!!");
+                isTouchedOnce = true;
+                dataManager.ShowNoteToEdit(indexOfNode);
+            }
             if (holdDuration >= 1f)
             {
+                Debug.Log(holdDuration + " came inside");
                 actualImage.enabled = false;
                 buttonGameObject.SetActive(true);
             }
@@ -45,6 +52,7 @@ public class NodeData : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         isHolding = false;
         holdDuration = 0f;
+        isTouchedOnce = false;
     }
 
     public void DeleteButtonClicked()
