@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public GameObject newNotesPanel;
     public GameObject saveConfirmationPanel;
     public GameObject editNotePanel;
+    public GameObject editNoteDiscardChangesPanel;
 
     [Header("Text for searching")]
     public TMPro.TMP_InputField searchingText;
@@ -138,6 +139,11 @@ public class UIManager : MonoBehaviour
     public void SaveButtonClickedInEditNote()
     {
         Debug.Log("ConfirmSave clicked");
+        if (editDescriptionText.text.Length != 0 && editTitleText.text.Length != 0)
+        {
+            dataManager.UpdateNote(editedIndexNumber.text, editTitleText.text, editDescriptionText.text);
+            BackButtonClickedInEditNote();
+        }
     }
     #endregion
 

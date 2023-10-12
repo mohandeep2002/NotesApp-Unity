@@ -57,9 +57,27 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void UpdateNote(int id, string nodeTitle, string nodeDescription)
+    public void UpdateNote(string id, string nodeTitle, string nodeDescription)
     {
-
+        foreach (var data in dataFromForm)
+        {
+            if (data.NoteID == int.Parse(id))
+            {
+                data.Title = nodeTitle;
+                data.Description = nodeDescription;
+                break;
+            }
+        }
+        foreach (var data in dataGenerated)
+        {
+            if (data.name.Equals(id))
+            {
+                NodeData tempData = data.GetComponent<NodeData>();
+                tempData.nodeDesp = nodeDescription;
+                tempData.nodeTitle = nodeTitle;
+                break;
+            }
+        }
     }
 
     #endregion
